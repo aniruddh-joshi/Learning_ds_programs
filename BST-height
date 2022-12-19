@@ -1,0 +1,62 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+	int data;
+	struct node*left;
+	struct node*right;
+};
+
+//Creation of Tree
+struct node*insert(struct node* root,int x)
+{
+	if(root==NULL)
+	{
+		struct node*temp= malloc(sizeof(struct node));
+		temp->data=x;
+		temp->left=NULL;
+		temp->right=NULL;
+		root=temp;
+		return root;
+	}
+	if(x<root->data){
+		root->left=insert(root->left,x);
+	}
+	else if(x>root->data){
+		root->right=insert(root->right,x);
+	}
+	return root;
+}
+//Height of Binay Search Tree
+int tree_height(struct node*root)
+{
+	if(!root)
+	return 0;
+	else{
+		int left_height=tree_height(root->left);
+		int right_height=tree_height(root->right);
+		if(left_height>=right_height)
+			return left_height+1;
+		else
+			return right_height+1;
+	}
+}
+
+int main()
+{
+	struct node*root=NULL;
+	int data;
+	int t;
+	int i=0;
+	printf("How many elements you wnat to insert = ");
+	scanf("%d",&t);
+	while(t--)
+	{
+		printf("Enter the elements %d = ",++i);
+		scanf("%d",&data);
+		root=insert(root,data);
+	}
+	int height=tree_height(root);
+	printf("Height of the Binary Search Tree: %d",height);
+	return 0;
+}
